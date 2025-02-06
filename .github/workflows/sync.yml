@@ -1,0 +1,22 @@
+name: Sync Vision Camera Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Extract `packages/react-native-vision-camera`
+        run: |
+          git filter-repo --subdirectory-filter packages/react-native-vision-camera
+
+      - name: Push to New Repository
+        run: |
+          git remote add vision-camera https://github.com/imcode-x/react-native-vision-camera.git
+          git push -f vision-camera main
